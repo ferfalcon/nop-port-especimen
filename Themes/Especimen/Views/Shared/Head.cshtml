@@ -1,0 +1,18 @@
+﻿@using Nop.Core.Domain.Catalog
+
+@inject CatalogSettings catalogSettings
+@inject IThemeContext themeContext
+
+@{
+	Layout = "";
+	var themeName = await themeContext.GetWorkingThemeNameAsync();
+
+	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/styles.css");
+
+	if (catalogSettings.DisplayAllPicturesOnCatalogPages)
+	{
+		NopHtml.AppendCssFileParts("~/lib_npm/swiper/swiper-bundle.min.css");
+	}
+
+	NopHtml.AppendCssFileParts("~/lib_npm/jquery-ui-dist/jquery-ui.min.css");
+}
