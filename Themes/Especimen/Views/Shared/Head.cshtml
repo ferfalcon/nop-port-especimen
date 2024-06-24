@@ -8,6 +8,7 @@
 	var themeName = await themeContext.GetWorkingThemeNameAsync();
 
 	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/styles.css");
+	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/footer.css");
 
 	if (catalogSettings.DisplayAllPicturesOnCatalogPages)
 	{
