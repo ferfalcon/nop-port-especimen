@@ -40,7 +40,7 @@
 	<div class="footer-upper">
 		@if (topicsLinksCol1.Any() || footerLinksCol1.Any(link => link.Condition))
 		{
-			<nav class="footer-block information">
+			<nav class="content-box">
 				<h2 class="title">@T("Footer.Information")</h2>
 				<ul class="list">
 					@foreach (var topic in topicsLinksCol1)
@@ -60,7 +60,7 @@
 		}
 		@if (topicsLinksCol2.Any() || footerLinksCol2.Any(link => link.Condition))
 		{
-			<nav class="footer-block customer-service">
+			<nav class="content-box">
 				<h2 class="title">@T("Footer.CustomerService")</h2>
 				<ul class="list">
 					@foreach (var topic in topicsLinksCol2)
@@ -80,7 +80,7 @@
 		}
 		@if (topicsLinksCol3.Any() || footerLinksCol3.Any(link => link.Condition))
 		{
-			<nav class="footer-block my-account">
+			<nav class="content-box">
 				<h2 class="title">@T("Footer.MyAccount")</h2>
 				<ul class="list">
 					@foreach (var topic in topicsLinksCol3)
@@ -98,31 +98,27 @@
 				</ul>
 			</nav>
 		}
-		<div class="footer-block follow-us">
-			<nav class="social">
-				<h2 class="title">
-					<strong>@T("Footer.FollowUs")</strong>
-				</h2>
-				@await Component.InvokeAsync(typeof(SocialButtonsViewComponent))
-			</nav>
-			@await Component.InvokeAsync(typeof(NewsletterBoxViewComponent))
-		</div>
+		<nav class="content-box   social">
+			<h2 class="title">@T("Footer.FollowUs")</h2>
+			@await Component.InvokeAsync(typeof(SocialButtonsViewComponent))
+		</nav>
+		@await Component.InvokeAsync(typeof(NewsletterBoxViewComponent))
 	</div>
 	<p class="footer-lower">
-		<small class="footer-info">
-			<span class="footer-disclaimer">@T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)</span>
-			@if (Model.DisplayTaxShippingInfoFooter)
-			{
-				var inclTax = await workContext.GetTaxDisplayTypeAsync() == TaxDisplayType.IncludingTax;
-				<span class="footer-tax-shipping">@T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteTopicUrl("shippinginfo"))</span>
-			}
-		</small>
 		@if (!Model.HidePoweredByNopCommerce)
 		{
 			<small class="footer-powered-by">
 				Powered by <a href="@(OfficialSite.Main)" target="_blank" @(Model.IsHomePage ? string.Empty : "rel=nofollow")>nopCommerce</a>
 			</small>
 		}
+		<small class="footer-info">
+			<span>@T("Content.CopyrightNotice", DateTime.Now.Year, Model.StoreName)</span>
+			@if (Model.DisplayTaxShippingInfoFooter)
+			{
+				var inclTax = await workContext.GetTaxDisplayTypeAsync() == TaxDisplayType.IncludingTax;
+				<span>@T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteTopicUrl("shippinginfo"))</span>
+			}
+		</small>
 		@await Component.InvokeAsync(typeof(StoreThemeSelectorViewComponent))
 	</p>
 	@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.Footer, additionalData = Model })
