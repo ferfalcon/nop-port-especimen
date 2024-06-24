@@ -30,6 +30,7 @@
 	cursor: pointer;
 }
 
+.footer-block .title,
 .footer-block .title strong {
 	font-weight: normal;
 }
