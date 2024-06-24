@@ -1,14 +1,23 @@
 /*********** FOOTER ***********/
 
 .footer {
-	background-color: #eee;
+	--clr-neutral-100: #fff;
+	--clr-neutral-200: #eee;
+	--clr-neutral-300: #ddd;
+	--clr-neutral-700: #444;
+
+	--clr-brand-500: #4ab2f1;
+	--clr-brand-600: #248ece;
+
+
+	background-color: var(--clr-neutral-200);
 	text-align: center;
 }
 
 .footer-upper {
 	width: 95%;
 	margin: auto;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid var(--clr-neutral-300);
 	overflow: hidden;
 	padding: 40px 0;
 	font-size: 0;
@@ -23,10 +32,10 @@
 
 .footer-block .title {
 	margin: 0 0 1px;
-	background: #4ab2f1 url('../images/toggle-white.png') right center no-repeat;
+	background: var(--clr-brand-500) url('../images/toggle-white.png') right center no-repeat;
 	padding: 10px 15px;
 	font-size: 20px;
-	color: #fff;
+	color: var(--clr-neutral-100);
 	cursor: pointer;
 }
 
@@ -38,7 +47,7 @@
 .footer-block .list {
 	display: none;
 	margin: 0 0 20px;
-	background-color: #fff;
+	background-color: var(--clr-neutral-100);
 	padding: 10px 15px;
 }
 
@@ -50,7 +59,7 @@
 
 .footer-block .list a:hover,
 .footer-block .list a:focus {
-	color: #4ab2f1;
+	color: var(--clr-brand-500);
 }
 
 .follow-us {
@@ -61,13 +70,13 @@
 .follow-us .title {
 	margin: 0 0 10px;
 	background: none;
-	color: #444;
+	color: var(--clr-neutral-700);
 	cursor: auto;
 }
 
 .follow-us .social ul {
 	margin: 0 0 30px;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid var(--clr-neutral-300);
 	padding: 0 0 30px;
 	font-size: 0;
 }
@@ -125,16 +134,16 @@
 	float: left;
 	height: 36px;
 	border: none;
-	background-color: #4ab2f1;
+	background-color: var(--clr-brand-500);
 	padding: 0 15px;
 	text-align: center;
-	color: #fff;
+	color: var(--clr-neutral-100);
 	text-transform: uppercase;
 }
 
 .newsletter-subscribe-button:hover,
 .newsletter-subscribe-button:focus {
-	background-color: #248ece;
+	background-color: var(--clr-brand-600);
 }
 
 .newsletter-email .options {
@@ -159,7 +168,7 @@
 
 .footer-tax-shipping a {
 	font-weight: bold;
-	color: #4ab2f1;
+	color: var(--clr-brand-500);
 }
 
 .footer-tax-shipping a:hover,
@@ -174,7 +183,7 @@
 
 .footer-powered-by a {
 	font-weight: bold;
-	color: #4ab2f1;
+	color: var(--clr-brand-500);
 }
 
 .footer-powered-by a:hover,
@@ -214,7 +223,7 @@
 		margin: 0 0 15px;
 		background: none;
 		padding: 0;
-		color: #444;
+		color: var(--clr-neutral-700);
 		cursor: auto;
 	}
 
