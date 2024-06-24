@@ -32,7 +32,7 @@
 
 .footer-block .title {
 	margin: 0 0 1px;
-	background: var(--clr-brand-500) url('../images/toggle-white.png') right center no-repeat;
+	background: var(--clr-brand-500);
 	padding: 10px 15px;
 	font-size: 20px;
 	color: var(--clr-neutral-100);
@@ -45,7 +45,6 @@
 }
 
 .footer-block .list {
-	display: none;
 	margin: 0 0 20px;
 	background-color: var(--clr-neutral-100);
 	padding: 10px 15px;
