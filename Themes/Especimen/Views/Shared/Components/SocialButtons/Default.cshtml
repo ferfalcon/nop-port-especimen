@@ -1,34 +1,27 @@
 ﻿@model SocialModel
 
-<ul class="networks">
-	@if (!string.IsNullOrEmpty(Model.FacebookLink))
+@{
+	var socialLinks = new List<(bool Condition, string CssClass, string Url, string TranslationKey)>
 	{
-		<li class="facebook">
-			<a href="@Model.FacebookLink" target="_blank" rel="noopener noreferrer">@T("Footer.FollowUs.Facebook")</a>
-		</li>
-	}
-	@if (!string.IsNullOrEmpty(Model.TwitterLink))
-	{
-		<li class="twitter">
-			<a href="@Model.TwitterLink" target="_blank" rel="noopener noreferrer">@T("Footer.FollowUs.Twitter")</a>
-		</li>
-	}
-	@if (Model.NewsEnabled)
-	{
-		<li class="rss">
-			<a href="@Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId})">@T("Footer.FollowUs.RSS")</a>
-		</li>
-	}
-	@if (!string.IsNullOrEmpty(Model.YoutubeLink))
-	{
-		<li class="youtube">
-			<a href="@Model.YoutubeLink" target="_blank" rel="noopener noreferrer">@T("Footer.FollowUs.Youtube")</a>
-		</li>
-	}
-	@if (!string.IsNullOrEmpty(Model.InstagramLink))
-	{
-		<li class="instagram">
-			<a href="@Model.InstagramLink" target="_blank" rel="noopener noreferrer">@T("Footer.FollowUs.Instagram")</a>
-		</li>
-	}
-</ul>
+		(!string.IsNullOrEmpty(Model.FacebookLink), "facebook", Model.FacebookLink, "Footer.FollowUs.Facebook"),
+		(!string.IsNullOrEmpty(Model.TwitterLink), "twitter", Model.TwitterLink, "Footer.FollowUs.Twitter"),
+		(!string.IsNullOrEmpty(Model.YoutubeLink), "youtube", Model.YoutubeLink, "Footer.FollowUs.Youtube"),
+		(!string.IsNullOrEmpty(Model.InstagramLink), "instagram", Model.InstagramLink, "Footer.FollowUs.Instagram"),
+		(Model.NewsEnabled, "rss", Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId}), "Footer.FollowUs.RSS"),
+	};
+}
+
+@if (socialLinks.Any(link => link.Condition))
+{
+	<nav class="content-box   social-buttons">
+		<h2 class="box-label">@T("Footer.FollowUs")</h2>
+		<ul class="link-list">
+			@foreach (var link in socialLinks.Where(link => link.Condition))
+			{
+				<li>
+					<a class="@link.CssClass" href="@link.Url" target="_blank" rel="noopener noreferrer">@T(link.TranslationKey)</a>
+				</li>
+			}
+		</ul>
+	</nav>
+}
