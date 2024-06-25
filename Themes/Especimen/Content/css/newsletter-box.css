@@ -1,0 +1,21 @@
+.newsletter-box {		
+	.newsletter-box__input-text {
+		color: var(--clr-neutral-600);
+		flex-grow: 1;
+		max-width: 100%;
+	}
+
+	.newsletter-box__button {
+		flex-grow: 1;
+	}
+
+	.newsletter-validation,
+	.newsletter-result {
+		line-height: 1.5;
+	}
+
+	.newsletter-result:empty,
+	.field-validation-valid:empty {
+		display: contents;
+	}
+}

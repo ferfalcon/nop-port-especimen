@@ -79,76 +79,60 @@
 	}
 }
 
-.content-box {
+.wrapper-box {
 	display: grid;
 	align-content: start;
-	gap: .75rem;
-}
+	gap: 1.5rem;
+	
+	.wrapper-box__label {
+		color: var(--clr-brand-700);
+		font-size: var(--font-size-400);
+		font-weight: normal;
+	}
+	
+	.wrapper-box__content {
+		display: grid;
+		gap: 1rem;
+	}
 
-.box-label {
-	color: var(--clr-brand-700);
-	font-size: var(--font-size-400);
-	font-weight: normal;
-}
+	&:is(.wrapper-box--footer-topic-colm) {
+		a {
+			color: var(--clr-neutral-600);
+	
+			&:hover,
+			&:focus {
+				color: var(--clr-brand-500);
+				text-decoration: underline;
+			}
+		}
+	}
 
-.link-list {
-	display: grid;
-	gap: .5rem;
+	&:is(.wrapper-box--social-buttons) {
+		.wrapper-box__content {
+			display: flex;
+			flex-wrap: wrap;
+			gap: .5rem;
+		}
+	}
 
-	a {
-		font-size: var(--font-size-200);
-		color: var(--clr-neutral-600);
-		display: inline-block;
-		padding-block: .25rem;
-
-		&:hover,
-		&:focus {
-			color: var(--clr-brand-500);
+	&:is(.wrapper-box--newsletter-box) {
+		.wrapper-box__content {
+			display: flex;
+			flex-wrap: wrap;
+			gap: .25rem;
 		}
 	}
 }
 
-.social-buttons .link-list {
-	display: flex;
-	flex-wrap: wrap;
-	gap: .5rem;
-}
-
-.newsletter-box {
-	.newsletter-box__form {
-		display: flex;
-		flex-wrap: wrap;
-		gap: .25rem;
-	}
-		
-	.newsletter-box__input-text {
-		color: var(--clr-neutral-600);
-		flex-grow: 1;
-		max-width: 100%;
-	}
+.button {
+	color: var(--clr-brand-900);
+	background-color: var(--clr-brand-500);
+	padding: .5rem 1rem;
+	border: none;
 	
-	.newsletter-box__button {
-		flex-grow: 1;
-		color: var(--clr-brand-900);
-		background-color: var(--clr-brand-500);
-		padding: .5rem 1rem;
-		border: none;
-		
-		&:hover,
-		&:focus {
-			background-color: var(--clr-brand-600);
-		}
-	}
-	
-	.newsletter-validation,
-	.newsletter-result {
-		line-height: 1.5;
-		padding-inline: 1.5rem;
-	}
-	
-	.newsletter-result:empty,
-	.field-validation-valid:empty {
-		display: contents;
+	&:hover,
+	&:focus {
+		background-color: var(--clr-brand-600);
 	}
 }
 

@@ -13,9 +13,9 @@
 
 @if (socialLinks.Any(link => link.Condition))
 {
-	<nav class="content-box   social-buttons">
-		<h2 class="box-label">@T("Footer.FollowUs")</h2>
-		<ul class="link-list">
+	<nav class="wrapper-box   wrapper-box--social-buttons   social-buttons">
+		<h2 class="wrapper-box__label">@T("Footer.FollowUs")</h2>
+		<ul class="wrapper-box__content">
 			@foreach (var link in socialLinks.Where(link => link.Condition))
 			{
 				<li>

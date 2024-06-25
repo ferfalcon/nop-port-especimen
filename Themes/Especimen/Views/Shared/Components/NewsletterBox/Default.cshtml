@@ -1,8 +1,8 @@
 ﻿@model NewsletterBoxModel
 
-<div class="content-box   newsletter-box">
-	<h2 class="box-label">@T("Newsletter.Title")</h2>
-	<form class="newsletter-box__form" id="newsletter-subscribe-block">
+<div class="wrapper-box   wrapper-box--newsletter-box   newsletter-box">
+	<h2 class="wrapper-box__label">@T("Newsletter.Title")</h2>
+	<form class="wrapper-box__content" id="newsletter-subscribe-block">
 		<input class="newsletter-box__input-text" asp-for="NewsletterEmail" id="newsletter-email" placeholder=@T("Newsletter.Email.Placeholder") aria-label="@T("Newsletter.Subscribe")" />
 		@if (Model.AllowToUnsubscribe)
 		{
@@ -21,7 +21,7 @@
 		{
 			<nop-captcha />
 		}
-		<button type="button" id="newsletter-subscribe-button" class="newsletter-box__button">
+		<button type="button" id="newsletter-subscribe-button" class="button   newsletter-box__button">
 			@T(Model.AllowToUnsubscribe ? "Newsletter.Options.Send" : "Newsletter.Options.Subscribe")
 		</button>
 		<span id="subscribe-loading-progress" style="display: none;" class="please-wait">@T("Common.Wait")</span>

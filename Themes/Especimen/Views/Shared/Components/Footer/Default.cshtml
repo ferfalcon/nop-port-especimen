@@ -40,9 +40,9 @@
 	<div class="footer__upper-section">
 		@if (topicsLinksCol1.Any() || footerLinksCol1.Any(link => link.Condition))
 		{
-			<nav class="content-box">
-				<h2 class="box-label">@T("Footer.Information")</h2>
-				<ul class="link-list">
+			<nav class="wrapper-box   wrapper-box--footer-topic-colm">
+				<h2 class="wrapper-box__label">@T("Footer.Information")</h2>
+				<ul class="wrapper-box__content">
 					@foreach (var topic in topicsLinksCol1)
 					{
 						<li>
@@ -60,9 +60,9 @@
 		}
 		@if (topicsLinksCol2.Any() || footerLinksCol2.Any(link => link.Condition))
 		{
-			<nav class="content-box">
-				<h2 class="box-label">@T("Footer.CustomerService")</h2>
-				<ul class="link-list">
+			<nav class="wrapper-box   wrapper-box--footer-topic-colm">
+				<h2 class="wrapper-box__label">@T("Footer.CustomerService")</h2>
+				<ul class="wrapper-box__content">
 					@foreach (var topic in topicsLinksCol2)
 					{
 						<li>
@@ -80,9 +80,9 @@
 		}
 		@if (topicsLinksCol3.Any() || footerLinksCol3.Any(link => link.Condition))
 		{
-			<nav class="content-box">
-				<h2 class="box-label">@T("Footer.MyAccount")</h2>
-				<ul class="link-list">
+			<nav class="wrapper-box   wrapper-box--footer-topic-colm">
+				<h2 class="wrapper-box__label">@T("Footer.MyAccount")</h2>
+				<ul class="wrapper-box__content">
 					@foreach (var topic in topicsLinksCol3)
 					{
 						<li>
