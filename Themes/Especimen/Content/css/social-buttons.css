@@ -1,0 +1,32 @@
+.social-buttons {
+	a {
+		display: block;
+		width: 2.5rem;
+		height: 2.5rem;
+		overflow: hidden;
+		text-indent: -1000vw;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+	}
+	
+	.facebook {
+		background-image: url('../images/social-networks/logo--facebook.svg');
+	}
+	
+	.twitter {
+		background-image: url('../images/social-networks/logo--x.svg');
+	}
+	
+	.youtube {
+		background-image: url('../images/social-networks/logo--youtube.svg');
+	}
+	
+	.instagram {
+		background-image: url('../images/social-networks/logo--instagram.svg');
+	}
+	
+	.rss {
+		background-image: url('../images/social-networks/logo--rss.svg');
+	}
+}
