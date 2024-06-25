@@ -19,3 +19,19 @@
 
 	NopHtml.AppendCssFileParts("~/lib_npm/jquery-ui-dist/jquery-ui.min.css");
 }
+
+<script asp-location="Footer">
+	$(function () {
+		$('.block .title').on('click', function () {
+			var e = window, a = 'inner';
+			if (!('innerWidth' in window)) {
+				a = 'client';
+				e = document.documentElement || document.body;
+			}
+			var result = { width: e[a + 'Width'], height: e[a + 'Height'] };
+			if (result.width < 1001) {
+				$(this).siblings('.listbox').slideToggle('slow');
+			}
+		});
+	});
+</script>

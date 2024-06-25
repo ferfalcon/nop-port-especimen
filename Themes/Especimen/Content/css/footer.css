@@ -135,11 +135,3 @@
 		background-color: var(--clr-brand-600);
 	}
 }
-
-.theme-selector {
-	margin: 10px 0 0;
-
-	select {
-		width: 170px;
-	}
-}
