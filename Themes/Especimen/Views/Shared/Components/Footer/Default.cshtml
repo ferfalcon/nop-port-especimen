@@ -6,98 +6,72 @@
 
 @inject IWorkContext workContext
 
+@functions {
+	private void RenderFooterNav(string title, List<FooterModel.FooterTopicModel> topics, List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> links)
+	{
+		if (topics.Any() || links.Any(link => link.Condition))
+		{
+			@:<nav class="wrapper-box    wrapper-box--footer-topic-colm">
+				@:<h2 class="wrapper-box__label">@T(title)</h2>
+				@:<ul class="wrapper-box__content">
+					@foreach (var topic in topics)
+					{
+						@:<li>
+							@:<a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">@topic.Name</a>
+						@:</li>
+					}
+					@foreach (var link in links.Where(link => link.Condition))
+					{
+						@:<li>
+							@if (link.IsRoute) {
+								@:<a href="@Url.RouteUrl(link.Link)">@T(link.TranslationKey)</a>
+							} else {
+								@:<a href="@link.Link">@T(link.TranslationKey)</a>
+							}
+						@:</li>
+					}
+				@:</ul>
+			@:</nav>
+		}
+	}
+}
+
 @{
 	var topicsLinksCol1 = Model.Topics?.Where(x => x.IncludeInFooterColumn1).ToList() ?? new List<FooterModel.FooterTopicModel>();
-	var footerLinksCol1 = new List<(bool Condition, string RouteName, string TranslationKey)> {
-				(Model.SitemapEnabled && Model.DisplaySitemapFooterItem, "Sitemap", "Sitemap"),
-				(Model.NewsEnabled && Model.DisplayNewsFooterItem, "NewsArchive", "News"),
-				(Model.BlogEnabled && Model.DisplayBlogFooterItem, "Blog", "Blog"),
-				(Model.DisplayContactUsFooterItem, "ContactUs", "ContactUs"),
-			};
+	var footerLinksCol1 = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {
+				(Model.SitemapEnabled && Model.DisplaySitemapFooterItem, true, "Sitemap", "Sitemap"),
+				(Model.NewsEnabled && Model.DisplayNewsFooterItem, true, "NewsArchive", "News"),
+				(Model.BlogEnabled && Model.DisplayBlogFooterItem, true, "Blog", "Blog"),
+				(Model.DisplayContactUsFooterItem, true, "ContactUs", "ContactUs"),
+	};
 
 	var topicsLinksCol2 = Model.Topics?.Where(x => x.IncludeInFooterColumn2).ToList() ?? new List<FooterModel.FooterTopicModel>();
-	var footerLinksCol2 = new List<(bool Condition, string RouteName, string TranslationKey)> {
-				(Model.SearchEnabled && Model.DisplayProductSearchFooterItem, "ProductSearch", "Search"),
-				(Model.RecentlyViewedProductsEnabled && Model.DisplayRecentlyViewedProductsFooterItem, "RecentlyViewedProducts", "Products.RecentlyViewedProducts"),
-				(Model.NewProductsEnabled && Model.DisplayNewProductsFooterItem, "NewProducts", "Products.NewProducts"),
-				(Model.CompareProductsEnabled && Model.DisplayCompareProductsFooterItem, "CompareProducts", "Products.Compare.List"),
-				(Model.ForumEnabled && Model.DisplayForumsFooterItem, "Boards", "Forum.Forums"),
-				(Model.AllowCustomersToCheckGiftCardBalance, "CheckGiftCardBalance", "CheckGiftCardBalance"),
-			};
+	var footerLinksCol2 = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {
+				(Model.SearchEnabled && Model.DisplayProductSearchFooterItem, true, "ProductSearch", "Search"),
+				(Model.RecentlyViewedProductsEnabled && Model.DisplayRecentlyViewedProductsFooterItem, true, "RecentlyViewedProducts", "Products.RecentlyViewedProducts"),
+				(Model.NewProductsEnabled && Model.DisplayNewProductsFooterItem, true, "NewProducts", "Products.NewProducts"),
+				(Model.CompareProductsEnabled && Model.DisplayCompareProductsFooterItem, true, "CompareProducts", "Products.Compare.List"),
+				(Model.ForumEnabled && Model.DisplayForumsFooterItem, true, "Boards", "Forum.Forums"),
+				(Model.AllowCustomersToCheckGiftCardBalance, true, "CheckGiftCardBalance", "CheckGiftCardBalance"),
+				(true, false, "http://google.com", "New.Item.Added"),
+	};
 
 	var topicsLinksCol3 = Model.Topics?.Where(x => x.IncludeInFooterColumn3).ToList() ?? new List<FooterModel.FooterTopicModel>();
-	var footerLinksCol3 = new List<(bool Condition, string RouteName, string TranslationKey)> {
-				(Model.DisplayCustomerInfoFooterItem, "CustomerInfo", "Account.MyAccount"),
-				(Model.DisplayCustomerOrdersFooterItem, "CustomerOrders", "Account.CustomerOrders"),
-				(Model.DisplayCustomerAddressesFooterItem, "CustomerAddresses", "Account.CustomerAddresses"),
-				(Model.ShoppingCartEnabled && Model.DisplayShoppingCartFooterItem, "ShoppingCart", "ShoppingCart"),
-				(Model.WishlistEnabled && Model.DisplayWishlistFooterItem, "Wishlist", "Wishlist"),
-				(Model.AllowCustomersToApplyForVendorAccount && Model.DisplayApplyVendorAccountFooterItem, "ApplyVendorAccount", "Vendors.ApplyAccount"),
-			};
+	var footerLinksCol3 = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {
+				(Model.DisplayCustomerInfoFooterItem, true, "CustomerInfo", "Account.MyAccount"),
+				(Model.DisplayCustomerOrdersFooterItem, true, "CustomerOrders", "Account.CustomerOrders"),
+				(Model.DisplayCustomerAddressesFooterItem, true, "CustomerAddresses", "Account.CustomerAddresses"),
+				(Model.ShoppingCartEnabled && Model.DisplayShoppingCartFooterItem, true, "ShoppingCart", "ShoppingCart"),
+				(Model.WishlistEnabled && Model.DisplayWishlistFooterItem, true, "Wishlist", "Wishlist"),
+				(Model.AllowCustomersToApplyForVendorAccount && Model.DisplayApplyVendorAccountFooterItem, true, "ApplyVendorAccount", "Vendors.ApplyAccount"),
+	};
 }
 
 <footer class="footer">
 	<div class="footer__upper-section">
-		@if (topicsLinksCol1.Any() || footerLinksCol1.Any(link => link.Condition))
-		{
-			<nav class="wrapper-box   wrapper-box--footer-topic-colm">
-				<h2 class="wrapper-box__label">@T("Footer.Information")</h2>
-				<ul class="wrapper-box__content">
-					@foreach (var topic in topicsLinksCol1)
-					{
-						<li>
-							<a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">@topic.Name</a>
-						</li>
-					}
-					@foreach (var link in footerLinksCol1.Where(link => link.Condition))
-					{
-						<li>
-							<a href="@Url.RouteUrl(link.RouteName)">@T(link.TranslationKey)</a>
-						</li>
-					}
-				</ul>
-			</nav>
-		}
-		@if (topicsLinksCol2.Any() || footerLinksCol2.Any(link => link.Condition))
-		{
-			<nav class="wrapper-box   wrapper-box--footer-topic-colm">
-				<h2 class="wrapper-box__label">@T("Footer.CustomerService")</h2>
-				<ul class="wrapper-box__content">
-					@foreach (var topic in topicsLinksCol2)
-					{
-						<li>
-							<a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">@topic.Name</a>
-						</li>
-					}
-					@foreach (var link in footerLinksCol2.Where(link => link.Condition))
-					{
-						<li>
-							<a href="@Url.RouteUrl(link.RouteName)">@T(link.TranslationKey)</a>
-						</li>
-					}
-				</ul>
-			</nav>
-		}
-		@if (topicsLinksCol3.Any() || footerLinksCol3.Any(link => link.Condition))
-		{
-			<nav class="wrapper-box   wrapper-box--footer-topic-colm">
-				<h2 class="wrapper-box__label">@T("Footer.MyAccount")</h2>
-				<ul class="wrapper-box__content">
-					@foreach (var topic in topicsLinksCol3)
-					{
-						<li>
-							<a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">@topic.Name</a>
-						</li>
-					}
-					@foreach (var link in footerLinksCol3.Where(link => link.Condition))
-					{
-						<li>
-							<a href="@Url.RouteUrl(link.RouteName)">@T(link.TranslationKey)</a>
-						</li>
-					}
-				</ul>
-			</nav>
-		}
+		@{RenderFooterNav("Footer.Information", topicsLinksCol1, footerLinksCol1);}
+		@{RenderFooterNav("Footer.CustomerService", topicsLinksCol2, footerLinksCol2);}
+		@{RenderFooterNav("Footer.MyAccount", topicsLinksCol3, footerLinksCol3);}
 		@await Component.InvokeAsync(typeof(SocialButtonsViewComponent))
 		@await Component.InvokeAsync(typeof(NewsletterBoxViewComponent))
 	</div>
