@@ -8,14 +8,15 @@
 		(!string.IsNullOrEmpty(Model.YoutubeLink), "youtube", Model.YoutubeLink, "Footer.FollowUs.Youtube"),
 		(!string.IsNullOrEmpty(Model.InstagramLink), "instagram", Model.InstagramLink, "Footer.FollowUs.Instagram"),
 		(Model.NewsEnabled, "rss", Url.RouteUrl("NewsRSS", new {languageId = Model.WorkingLanguageId}), "Footer.FollowUs.RSS"),
+		@* (true, "mastodon", "https://mastodon.social/", "Footer.FollowUs"), *@
 	};
 }
 
 @if (socialLinks.Any(link => link.Condition))
 {
-	<nav class="wrapper-box   wrapper-box--social-buttons   social-buttons">
+	<nav class="wrapper-box   social-buttons">
 		<h2 class="wrapper-box__label">@T("Footer.FollowUs")</h2>
-		<ul class="wrapper-box__content">
+		<ul class="wrapper-box__content   wrapper-box__content--inline-list">
 			@foreach (var link in socialLinks.Where(link => link.Condition))
 			{
 				<li>

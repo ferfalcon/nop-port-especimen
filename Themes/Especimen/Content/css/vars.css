@@ -1,0 +1,21 @@
+:root {
+	--clr-neutral-100: #fff;
+	--clr-neutral-200: #eee;
+	--clr-neutral-300: #ddd;
+	--clr-neutral-500: #777;
+	--clr-neutral-600: #4f4f4f;
+	--clr-neutral-700: #444;
+	
+	--clr-brand-200: #cce9ff;
+	--clr-brand-500: #4ab2f1;
+	--clr-brand-600: #248ece;
+	--clr-brand-700: #004b7a;
+	--clr-brand-900: #002136;
+	
+	
+	--font-size-100: .75rem;
+	--font-size-200: .875rem;
+	--font-size-300: 1rem;
+	--font-size-400: 1.25rem;
+	--font-size-500: 1.5rem;
+}

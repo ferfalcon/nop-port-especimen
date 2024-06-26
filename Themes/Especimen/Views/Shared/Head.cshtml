@@ -8,9 +8,12 @@
 	var themeName = await themeContext.GetWorkingThemeNameAsync();
 
 	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/styles.css");
-	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/footer.css");
+	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/vars.css");
+	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/button.css");
+	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/wrapper-box.css");
 	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/social-buttons.css");
 	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/newsletter-box.css");
+	NopHtml.AppendCssFileParts($"~/Themes/{themeName}/Content/css/footer.css");
 
 	if (catalogSettings.DisplayAllPicturesOnCatalogPages)
 	{

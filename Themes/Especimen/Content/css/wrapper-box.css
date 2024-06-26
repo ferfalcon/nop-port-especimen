@@ -1,0 +1,31 @@
+.wrapper-box {
+	display: grid;
+	align-content: start;
+	gap: 1.5rem;
+	
+	&:is(.newsletter-box, .social-buttons) {
+		gap: .75rem;
+	}
+	
+	.wrapper-box__label {
+		color: var(--clr-brand-700);
+		font-size: var(--font-size-400);
+		font-weight: normal;
+	}
+	
+	.wrapper-box__content {
+		display: flex;
+		flex-wrap: wrap;
+		gap: .25rem;
+		
+		&:is(.wrapper-box__content--block-list) {
+			flex-direction: column;
+			gap: 1rem;
+		}
+	
+		&:is(.wrapper-box__content--inline-list) {
+			flex-direction: row;
+			gap: .5rem;
+		}
+	}
+}

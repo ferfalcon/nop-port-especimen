@@ -7,15 +7,19 @@
 
 	.newsletter-box__button {
 		flex-grow: 1;
+		flex-shrink: 1;
 	}
 
 	.newsletter-validation,
 	.newsletter-result {
 		line-height: 1.5;
+		margin-top: -1rem;
+		padding: .5rem;
+		border: solid thin gainsboro;
 	}
 
 	.newsletter-result:empty,
 	.field-validation-valid:empty {
-		display: contents;
+		display: none;
 	}
 }

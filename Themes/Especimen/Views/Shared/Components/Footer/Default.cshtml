@@ -11,9 +11,9 @@
 	{
 		if (topics.Any() || links.Any(link => link.Condition))
 		{
-			@:<nav class="wrapper-box    wrapper-box--footer-topic-colm">
+			@:<nav class="wrapper-box">
 				@:<h2 class="wrapper-box__label">@T(title)</h2>
-				@:<ul class="wrapper-box__content">
+				@:<ul class="wrapper-box__content   wrapper-box__content--block-list">
 					@foreach (var topic in topics)
 					{
 						@:<li>
@@ -43,6 +43,7 @@
 				(Model.NewsEnabled && Model.DisplayNewsFooterItem, true, "NewsArchive", "News"),
 				(Model.BlogEnabled && Model.DisplayBlogFooterItem, true, "Blog", "Blog"),
 				(Model.DisplayContactUsFooterItem, true, "ContactUs", "ContactUs"),
+				@* (true, false, "http://google.com", "New.Item.Added"), *@
 	};
 
 	var topicsLinksCol2 = Model.Topics?.Where(x => x.IncludeInFooterColumn2).ToList() ?? new List<FooterModel.FooterTopicModel>();
@@ -53,7 +54,6 @@
 				(Model.CompareProductsEnabled && Model.DisplayCompareProductsFooterItem, true, "CompareProducts", "Products.Compare.List"),
 				(Model.ForumEnabled && Model.DisplayForumsFooterItem, true, "Boards", "Forum.Forums"),
 				(Model.AllowCustomersToCheckGiftCardBalance, true, "CheckGiftCardBalance", "CheckGiftCardBalance"),
-				(true, false, "http://google.com", "New.Item.Added"),
 	};
 
 	var topicsLinksCol3 = Model.Topics?.Where(x => x.IncludeInFooterColumn3).ToList() ?? new List<FooterModel.FooterTopicModel>();
@@ -78,7 +78,7 @@
 	<p class="footer__lower-section">
 		@if (!Model.HidePoweredByNopCommerce)
 		{
-			<small class="footer-lower__powered-by">
+			<small class="powered-by">
 				Powered by <a href="@(OfficialSite.Main)" target="_blank" @(Model.IsHomePage ? string.Empty : "rel=nofollow")>nopCommerce</a>
 			</small>
 		}
