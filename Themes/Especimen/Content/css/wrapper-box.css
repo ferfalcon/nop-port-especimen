@@ -1,30 +1,33 @@
 .wrapper-box {
 	display: grid;
 	align-content: start;
-	gap: 1.5rem;
-	
+	gap: 1.25rem;
+
 	&:is(.newsletter-box, .social-buttons) {
-		gap: .75rem;
+		gap: .5rem;
 	}
-	
+
 	.wrapper-box__label {
-		color: var(--clr-brand-700);
+		color: var(--clr-neutral-800);
 		font-size: var(--font-size-400);
 		font-weight: normal;
 	}
-	
+
 	.wrapper-box__content {
 		display: flex;
 		flex-wrap: wrap;
 		gap: .25rem;
-		
-		&:is(.wrapper-box__content--block-list) {
+	}
+
+	&:is(.footer-links-column-1, .footer-links-column-2, .footer-links-column-3) {
+		.wrapper-box__content {
 			flex-direction: column;
 			gap: 1rem;
 		}
-	
-		&:is(.wrapper-box__content--inline-list) {
-			flex-direction: row;
+	}
+
+	&:is(.social-buttons) {
+		.wrapper-box__content {
 			gap: .5rem;
 		}
 	}

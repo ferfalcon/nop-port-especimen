@@ -1,77 +1,11 @@
-﻿@model FooterModel
-
-@using Nop.Core
+﻿@using Nop.Core
 @using Nop.Core.Domain.Tax
-@using Nop.Core.Domain.Topics
 
 @inject IWorkContext workContext
 
-@functions {
-	private void RenderFooterNav(string title, List<FooterModel.FooterTopicModel> topics, List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> links)
-	{
-		if (topics.Any() || links.Any(link => link.Condition))
-		{
-			@:<nav class="wrapper-box">
-				@:<h2 class="wrapper-box__label">@T(title)</h2>
-				@:<ul class="wrapper-box__content   wrapper-box__content--block-list">
-					@foreach (var topic in topics)
-					{
-						@:<li>
-							@:<a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">@topic.Name</a>
-						@:</li>
-					}
-					@foreach (var link in links.Where(link => link.Condition))
-					{
-						@:<li>
-							@if (link.IsRoute) {
-								@:<a href="@Url.RouteUrl(link.Link)">@T(link.TranslationKey)</a>
-							} else {
-								@:<a href="@link.Link">@T(link.TranslationKey)</a>
-							}
-						@:</li>
-					}
-				@:</ul>
-			@:</nav>
-		}
-	}
-}
-
-@{
-	var topicsLinksCol1 = Model.Topics?.Where(x => x.IncludeInFooterColumn1).ToList() ?? new List<FooterModel.FooterTopicModel>();
-	var footerLinksCol1 = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {
-				(Model.SitemapEnabled && Model.DisplaySitemapFooterItem, true, "Sitemap", "Sitemap"),
-				(Model.NewsEnabled && Model.DisplayNewsFooterItem, true, "NewsArchive", "News"),
-				(Model.BlogEnabled && Model.DisplayBlogFooterItem, true, "Blog", "Blog"),
-				(Model.DisplayContactUsFooterItem, true, "ContactUs", "ContactUs"),
-				@* (true, false, "http://google.com", "New.Item.Added"), *@
-	};
-
-	var topicsLinksCol2 = Model.Topics?.Where(x => x.IncludeInFooterColumn2).ToList() ?? new List<FooterModel.FooterTopicModel>();
-	var footerLinksCol2 = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {
-				(Model.SearchEnabled && Model.DisplayProductSearchFooterItem, true, "ProductSearch", "Search"),
-				(Model.RecentlyViewedProductsEnabled && Model.DisplayRecentlyViewedProductsFooterItem, true, "RecentlyViewedProducts", "Products.RecentlyViewedProducts"),
-				(Model.NewProductsEnabled && Model.DisplayNewProductsFooterItem, true, "NewProducts", "Products.NewProducts"),
-				(Model.CompareProductsEnabled && Model.DisplayCompareProductsFooterItem, true, "CompareProducts", "Products.Compare.List"),
-				(Model.ForumEnabled && Model.DisplayForumsFooterItem, true, "Boards", "Forum.Forums"),
-				(Model.AllowCustomersToCheckGiftCardBalance, true, "CheckGiftCardBalance", "CheckGiftCardBalance"),
-	};
-
-	var topicsLinksCol3 = Model.Topics?.Where(x => x.IncludeInFooterColumn3).ToList() ?? new List<FooterModel.FooterTopicModel>();
-	var footerLinksCol3 = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {
-				(Model.DisplayCustomerInfoFooterItem, true, "CustomerInfo", "Account.MyAccount"),
-				(Model.DisplayCustomerOrdersFooterItem, true, "CustomerOrders", "Account.CustomerOrders"),
-				(Model.DisplayCustomerAddressesFooterItem, true, "CustomerAddresses", "Account.CustomerAddresses"),
-				(Model.ShoppingCartEnabled && Model.DisplayShoppingCartFooterItem, true, "ShoppingCart", "ShoppingCart"),
-				(Model.WishlistEnabled && Model.DisplayWishlistFooterItem, true, "Wishlist", "Wishlist"),
-				(Model.AllowCustomersToApplyForVendorAccount && Model.DisplayApplyVendorAccountFooterItem, true, "ApplyVendorAccount", "Vendors.ApplyAccount"),
-	};
-}
-
 <footer class="footer">
-	<div class="footer__upper-section">
-		@{RenderFooterNav("Footer.Information", topicsLinksCol1, footerLinksCol1);}
-		@{RenderFooterNav("Footer.CustomerService", topicsLinksCol2, footerLinksCol2);}
-		@{RenderFooterNav("Footer.MyAccount", topicsLinksCol3, footerLinksCol3);}
+	<div class="footer__upper-section   footer__upper-section--default">
+		@{ await Html.RenderPartialAsync("_FooterLinks"); }
 		@await Component.InvokeAsync(typeof(SocialButtonsViewComponent))
 		@await Component.InvokeAsync(typeof(NewsletterBoxViewComponent))
 	</div>
@@ -88,7 +22,6 @@
 			var inclTax = await workContext.GetTaxDisplayTypeAsync() == TaxDisplayType.IncludingTax;
 			<small>@T(inclTax ? "Footer.TaxShipping.InclTax" : "Footer.TaxShipping.ExclTax", Url.RouteTopicUrl("shippinginfo"))</small>
 		}
-		@await Component.InvokeAsync(typeof(StoreThemeSelectorViewComponent))
 	</p>
 	@await Component.InvokeAsync(typeof(WidgetViewComponent), new { widgetZone = PublicWidgetZones.Footer, additionalData = Model })
 </footer>

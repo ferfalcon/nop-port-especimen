@@ -2,182 +2,110 @@
 
 @using Nop.Core.Domain.Topics
 
-<div class="footer-block information">
-	<div class="title">
-		<strong>
-			@T("Footer.Information")
-		</strong>
-	</div>
-	<ul class="list">
-		@if (Model.SitemapEnabled && Model.DisplaySitemapFooterItem)
+@functions {
+	private void RenderFooterLinksColumn(						@* Structure *@
+		string title,																	@* Heading Text From Language Resources *@
+		string blockNameClass,												@* Block Name Classification *@
+		List<FooterModel.FooterTopicModel> topics,		@* Topics Links From Database *@
+		List<(																				@* Links From File List *@
+			bool Condition,															@* Condition *@
+			bool IsRoute,																@* Route Link Check *@
+			string Link,																@* Link Text *@
+			string TranslationKey												@* Text Loaded From Language Resources *@
+		)> links)
+	{
+		if (topics.Any() || links.Any(link => link.Condition))																				@* Check if there something to publish *@
 		{
-			<li>
-				<a href="@Url.RouteUrl("Sitemap")">
-					@T("Sitemap")
-				</a>
-			</li>
+			@:<nav class="wrapper-box   @blockNameClass">																								@* Wrapper box *@
+				@:<h2 class="wrapper-box__label">@T(title)</h2>																						@* Box Label *@
+				@:<ul class="wrapper-box__content">																												@* Box Content *@
+					@foreach (var topic in topics)
+					{
+						@:<li>																																								@* List Item *@
+							@:<a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">@topic.Name</a>		@* Anchor Text *@
+						@:</li>
+					}
+					@foreach (var link in links.Where(link => link.Condition))
+					{
+						@:<li>
+							@if (link.IsRoute) {
+								@:<a href="@Url.RouteUrl(link.Link)">@T(link.TranslationKey)</a>
+							} else {
+								@:<a href="@link.Link">@T(link.TranslationKey)</a>
+							}
+						@:</li>
+					}
+				@:</ul>
+			@:</nav>
 		}
-		@foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn1).ToList())
-		{
-			<li>
-				<a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">
-					@topic.Name
-				</a>
-			</li>
-		}
-		@if (Model.DisplayContactUsFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("ContactUs")">
-					@T("ContactUs")
-				</a>
-			</li>
-		}
-	</ul>
-</div>
-<div class="footer-block customer-service">
-	<div class="title">
-		<strong>
-			@T("Footer.CustomerService")
-		</strong>
-	</div>
-	<ul class="list">
-		@if (Model.SearchEnabled && Model.DisplayProductSearchFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("ProductSearch")">
-					@T("Search")
-				</a>
-			</li>
-		}
-		@if (Model.NewsEnabled && Model.DisplayNewsFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("NewsArchive")">
-					@T("News")
-				</a>
-			</li>
-		}
-		@if (Model.BlogEnabled && Model.DisplayBlogFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("Blog")">
-					@T("Blog")
-				</a>
-			</li>
-		}
-		@if (Model.ForumEnabled && Model.DisplayForumsFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("Boards")">
-					@T("Forum.Forums")
-				</a>
-			</li>
-		}
-		@if (Model.RecentlyViewedProductsEnabled && Model.DisplayRecentlyViewedProductsFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("RecentlyViewedProducts")">
-					@T("Products.RecentlyViewedProducts")
-				</a>
-			</li>
-		}
-		@if (Model.CompareProductsEnabled && Model.DisplayCompareProductsFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("CompareProducts")">
-					@T("Products.Compare.List")
-				</a>
-			</li>
-		}
-		@if (Model.NewProductsEnabled && Model.DisplayNewProductsFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("NewProducts")">
-					@T("Products.NewProducts")
-				</a>
-			</li>
-		}
-		@foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn2).ToList())
-		{
-			<li>
-				<a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">
-					@topic.Name
-				</a>
-			</li>
-		}
-		@if (Model.AllowCustomersToCheckGiftCardBalance)
-		{
-			<li>
-				<a href="@Url.RouteUrl("CheckGiftCardBalance")">
-					@T("CheckGiftCardBalance")
-				</a>
-			</li>
-		}
-	</ul>
-</div>
-<div class="footer-block my-account">
-	<div class="title">
-		<strong>
-			@T("Footer.MyAccount")
-		</strong>
-	</div>
-	<ul class="list">
-		@if (Model.DisplayCustomerInfoFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("CustomerInfo")">
-					@T("Account.MyAccount")
-				</a>
-			</li>
-		}
-		@if (Model.DisplayCustomerOrdersFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("CustomerOrders")">
-					@T("Account.CustomerOrders")
-				</a>
-			</li>
-		}
-		@if (Model.DisplayCustomerAddressesFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("CustomerAddresses")">
-					@T("Account.CustomerAddresses")
-				</a>
-			</li>
-		}
-		@if (Model.ShoppingCartEnabled && Model.DisplayShoppingCartFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("ShoppingCart")">
-					@T("ShoppingCart")
-				</a>
-			</li>
-		}
-		@if (Model.WishlistEnabled && Model.DisplayWishlistFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("Wishlist")">
-					@T("Wishlist")
-				</a>
-			</li>
-		}
-		@if (Model.AllowCustomersToApplyForVendorAccount && Model.DisplayApplyVendorAccountFooterItem)
-		{
-			<li>
-				<a href="@Url.RouteUrl("ApplyVendorAccount")">
-					@T("Vendors.ApplyAccount")
-				</a>
-			</li>
-		}
-		@foreach (var topic in Model.Topics.Where(x => x.IncludeInFooterColumn3).ToList())
-		{
-			<li>
-				<a href="@(Url.RouteUrl<Topic>(new { SeName = topic.SeName }))">
-					@topic.Name
-				</a>
-			</li>
-		}
-	</ul>
-</div>
+	}
+}
+
+@{
+	var topicsLinksNoCol = null ?? new List<FooterModel.FooterTopicModel>();
+	var footerLinksNoLinks = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {};
+
+	var topicsLinksCol1 = Model.Topics?.Where(x => x.IncludeInFooterColumn1).ToList() ?? new List<FooterModel.FooterTopicModel>();
+	var footerLinksCol1 = 
+				new List<(								@* Links From File List *@
+					bool Condition,					@* Condition *@
+					bool IsRoute, 					@* Route Link Check *@
+					string Link, 						@* Link Text *@
+					string TranslationKey		@* Text From Language Resources *@
+				)> {
+					(
+						Model.SitemapEnabled && Model.DisplaySitemapFooterItem, 	@* Condition *@
+						true, 																										@* Route Link Check *@
+						"Sitemap", 																								@* Link Text *@
+						"Sitemap"																									@* Text From Language Resources *@
+					),
+					(Model.NewsEnabled && Model.DisplayNewsFooterItem, true, "NewsArchive", "News"),
+					(Model.BlogEnabled && Model.DisplayBlogFooterItem, true, "Blog", "Blog"),
+					(Model.DisplayContactUsFooterItem, true, "ContactUs", "ContactUs"),
+	};
+
+	var topicsLinksCol2 = Model.Topics?.Where(x => x.IncludeInFooterColumn2).ToList() ?? new List<FooterModel.FooterTopicModel>();
+	var footerLinksCol2 = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {
+				(Model.SearchEnabled && Model.DisplayProductSearchFooterItem, true, "ProductSearch", "Search"),
+				(Model.RecentlyViewedProductsEnabled && Model.DisplayRecentlyViewedProductsFooterItem, true, "RecentlyViewedProducts", "Products.RecentlyViewedProducts"),
+				(Model.NewProductsEnabled && Model.DisplayNewProductsFooterItem, true, "NewProducts", "Products.NewProducts"),
+				(Model.CompareProductsEnabled && Model.DisplayCompareProductsFooterItem, true, "CompareProducts", "Products.Compare.List"),
+				(Model.ForumEnabled && Model.DisplayForumsFooterItem, true, "Boards", "Forum.Forums"),
+				(Model.AllowCustomersToCheckGiftCardBalance, true, "CheckGiftCardBalance", "CheckGiftCardBalance"),
+	};
+
+	var topicsLinksCol3 = Model.Topics?.Where(x => x.IncludeInFooterColumn3).ToList() ?? new List<FooterModel.FooterTopicModel>();
+	var footerLinksCol3 = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {
+				(Model.DisplayCustomerInfoFooterItem, true, "CustomerInfo", "Account.MyAccount"),
+				(Model.DisplayCustomerOrdersFooterItem, true, "CustomerOrders", "Account.CustomerOrders"),
+				(Model.DisplayCustomerAddressesFooterItem, true, "CustomerAddresses", "Account.CustomerAddresses"),
+				(Model.ShoppingCartEnabled && Model.DisplayShoppingCartFooterItem, true, "ShoppingCart", "ShoppingCart"),
+				(Model.WishlistEnabled && Model.DisplayWishlistFooterItem, true, "Wishlist", "Wishlist"),
+				(Model.AllowCustomersToApplyForVendorAccount && Model.DisplayApplyVendorAccountFooterItem, true, "ApplyVendorAccount", "Vendors.ApplyAccount"),
+	};
+
+	var footerLinksCol4 = new List<(bool Condition, bool IsRoute, string Link, string TranslationKey)> {
+				(Model.SitemapEnabled && Model.DisplaySitemapFooterItem, true, "Sitemap", "Sitemap"),
+				(Model.DisplayContactUsFooterItem, true, "ContactUs", "ContactUs"),
+				(Model.SearchEnabled && Model.DisplayProductSearchFooterItem, true, "ProductSearch", "Search"),
+				(Model.NewsEnabled && Model.DisplayNewsFooterItem, true, "NewsArchive", "News"),
+				(Model.BlogEnabled && Model.DisplayBlogFooterItem, true, "Blog", "Blog"),
+				(Model.ForumEnabled && Model.DisplayForumsFooterItem, true, "Boards", "Forum.Forums"),
+				(Model.RecentlyViewedProductsEnabled && Model.DisplayRecentlyViewedProductsFooterItem, true, "RecentlyViewedProducts", "Products.RecentlyViewedProducts"),
+				(Model.CompareProductsEnabled && Model.DisplayCompareProductsFooterItem, true, "CompareProducts", "Products.Compare.List"),
+				(Model.NewProductsEnabled && Model.DisplayNewProductsFooterItem, true, "NewProducts", "Products.NewProducts"),
+				(Model.DisplayCustomerInfoFooterItem, true, "CustomerInfo", "Account.MyAccount"),
+				(Model.DisplayCustomerOrdersFooterItem, true, "CustomerOrders", "Account.CustomerOrders"),
+				(Model.DisplayCustomerAddressesFooterItem, true, "CustomerAddresses", "Account.CustomerAddresses"),
+				(Model.ShoppingCartEnabled && Model.DisplayShoppingCartFooterItem, true, "ShoppingCart", "ShoppingCart"),
+				(Model.WishlistEnabled && Model.DisplayWishlistFooterItem, true, "Wishlist", "Wishlist"),
+				(Model.AllowCustomersToApplyForVendorAccount && Model.DisplayApplyVendorAccountFooterItem, true, "ApplyVendorAccount", "Vendors.ApplyAccount"),
+				(Model.AllowCustomersToCheckGiftCardBalance, true, "CheckGiftCardBalance", "CheckGiftCardBalance"),
+				(true, false, "http://google.com", "New.Item.Added"),
+	};
+}
+
+@{RenderFooterLinksColumn("Footer.Information", "footer-links-column-1", topicsLinksCol1, footerLinksCol1);}
+@{RenderFooterLinksColumn("Footer.CustomerService","footer-links-column-2", topicsLinksCol2, footerLinksCol2);}
+@{RenderFooterLinksColumn("Footer.MyAccount","footer-links-column-3", topicsLinksCol3, footerLinksCol3);}
+@{RenderFooterLinksColumn("Footer.Information","footer-links-column-new", topicsLinksNoCol, footerLinksNoLinks);}
