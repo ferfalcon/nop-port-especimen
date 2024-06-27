@@ -8,7 +8,7 @@
 	}
 
 	.wrapper-box__label {
-		color: var(--clr-neutral-800);
+		color: var(--clr-brand-700);
 		font-size: var(--font-size-400);
 		font-weight: normal;
 	}
